@@ -1,6 +1,6 @@
 {
   "name": "@sky7/db",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A unified database library for MongoDB and Firebase with TypeScript support",
   "homepage": "https://github.com/ecdevz/db#readme",
   "bugs": {
@@ -13,8 +13,14 @@
   "license": "MIT",
   "author": "Eshan Chathuranga",
   "main": "lib/index.js",
-  "module": "lib/index.esm.js",
   "types": "lib/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./lib/index.js",
+      "require": "./lib/index.js",
+      "types": "./lib/index.d.ts"
+    }
+  },
   "files": [
     "lib",
     "README.md",

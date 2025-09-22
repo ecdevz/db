@@ -184,5 +184,6 @@ class DB {
 }
 
 export default DB;
+export { DB };
 export * from './types';
 export { MongoDB, Firebase };
