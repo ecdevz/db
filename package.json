@@ -1,0 +1,71 @@
+{
+  "name": "@sky7/db",
+  "version": "1.0.0",
+  "description": "A unified database library for MongoDB and Firebase with TypeScript support",
+  "homepage": "https://github.com/ecdevz/db#readme",
+  "bugs": {
+    "url": "https://github.com/ecdevz/db/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ecdevz/db.git"
+  },
+  "license": "MIT",
+  "author": "Eshan Chathuranga",
+  "main": "lib/index.js",
+  "module": "lib/index.esm.js",
+  "types": "lib/index.d.ts",
+  "files": [
+    "lib",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ],
+  "keywords": [
+    "mongodb",
+    "firebase",
+    "firestore",
+    "database",
+    "typescript",
+    "nodejs",
+    "orm",
+    "nosql",
+    "unified-database"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "build:watch": "tsc --watch",
+    "clean": "rimraf lib",
+    "prepublishOnly": "npm run clean && npm run build",
+    "lint": "eslint src --ext .ts",
+    "lint:fix": "eslint src --ext .ts --fix",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "typecheck": "tsc --noEmit",
+    "dev": "tsx src/index.ts"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "dependencies": {
+    "firebase-admin": "^12.0.0",
+    "mongodb": "^6.0.0"
+  },
+  "peerDependencies": {
+    "firebase-admin": ">=11.0.0",
+    "mongodb": ">=5.0.0"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.0",
+    "@types/node": "^20.0.0",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "eslint": "^8.0.0",
+    "jest": "^29.5.0",
+    "rimraf": "^5.0.0",
+    "ts-jest": "^29.1.0",
+    "tsx": "^4.20.5",
+    "typescript": "^5.0.0"
+  }
+}
