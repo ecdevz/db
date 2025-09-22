@@ -19,7 +19,7 @@ class Firebase {
   private isInitialized = false;
 
   constructor(options: FirebaseOptions, logger?: Logger) {
-    this.logger = logger || this.createDefaultLogger();
+    this.logger = logger || this.createSilentLogger();
     
     try {
       // Check if Firebase Admin SDK is already initialized
@@ -43,14 +43,14 @@ class Firebase {
   }
 
   /**
-   * Creates a default logger if none provided
+   * Creates a silent logger that does nothing
    */
-  private createDefaultLogger(): Logger {
+  private createSilentLogger(): Logger {
     return {
-      info: (message: string, ...args: any[]) => console.log(`[INFO] ${message}`, ...args),
-      error: (message: string, ...args: any[]) => console.error(`[ERROR] ${message}`, ...args),
-      warn: (message: string, ...args: any[]) => console.warn(`[WARN] ${message}`, ...args),
-      debug: (message: string, ...args: any[]) => console.debug(`[DEBUG] ${message}`, ...args),
+      info: () => {},
+      error: () => {},
+      warn: () => {},
+      debug: () => {},
     };
   }
 

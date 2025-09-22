@@ -144,4 +144,73 @@ describe('DB Class', () => {
       expect(mockLogger.info).toHaveBeenCalled();
     });
   });
+
+  describe('Logger Configuration', () => {
+    it('should use silent logger when no logger provided and enableLogging not set', () => {
+      const options: DBOptions = {
+        mongodb: {
+          uri: 'mongodb://localhost:27017',
+          dbName: 'test'
+        }
+      };
+
+      // Should not throw an error
+      expect(() => new DB(options)).not.toThrow();
+    });
+
+    it('should use silent logger when enableLogging is false', () => {
+      const mockLogger = {
+        info: jest.fn(),
+        error: jest.fn(),
+        warn: jest.fn(),
+        debug: jest.fn()
+      };
+
+      const options: DBOptions = {
+        mongodb: {
+          uri: 'mongodb://localhost:27017',
+          dbName: 'test'
+        },
+        logger: mockLogger,
+        enableLogging: false
+      };
+
+      db = new DB(options);
+      // Logger methods should not have been called due to silent logger
+      expect(mockLogger.info).not.toHaveBeenCalled();
+    });
+
+    it('should use custom logger when enableLogging is true', () => {
+      const mockLogger = {
+        info: jest.fn(),
+        error: jest.fn(),
+        warn: jest.fn(),
+        debug: jest.fn()
+      };
+
+      const options: DBOptions = {
+        mongodb: {
+          uri: 'mongodb://localhost:27017',
+          dbName: 'test'
+        },
+        logger: mockLogger,
+        enableLogging: true
+      };
+
+      db = new DB(options);
+      expect(mockLogger.info).toHaveBeenCalled();
+    });
+
+    it('should throw error when enableLogging is true but no logger provided', () => {
+      const options: DBOptions = {
+        mongodb: {
+          uri: 'mongodb://localhost:27017',
+          dbName: 'test'
+        },
+        enableLogging: true
+      };
+
+      expect(() => new DB(options)).toThrow('enableLogging is set to true but no logger was provided. Please provide a logger in the options.');
+    });
+  });
 });

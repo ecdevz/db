@@ -26,7 +26,7 @@ class MongoDB {
 
   constructor(options: MongoDBOptions, logger?: Logger) {
     this.dbName = options.dbName;
-    this.logger = logger || this.createDefaultLogger();
+    this.logger = logger || this.createSilentLogger();
     
     const clientOptions: MongoClientOptions = {
       maxPoolSize: options.options?.maxPoolSize || 10,
@@ -43,14 +43,14 @@ class MongoDB {
   }
 
   /**
-   * Creates a default logger if none provided
+   * Creates a silent logger that does nothing
    */
-  private createDefaultLogger(): Logger {
+  private createSilentLogger(): Logger {
     return {
-      info: (message: string, ...args: any[]) => console.log(`[INFO] ${message}`, ...args),
-      error: (message: string, ...args: any[]) => console.error(`[ERROR] ${message}`, ...args),
-      warn: (message: string, ...args: any[]) => console.warn(`[WARN] ${message}`, ...args),
-      debug: (message: string, ...args: any[]) => console.debug(`[DEBUG] ${message}`, ...args),
+      info: () => {},
+      error: () => {},
+      warn: () => {},
+      debug: () => {},
     };
   }
 

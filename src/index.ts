@@ -16,8 +16,8 @@ class DB {
       throw new Error('At least one database configuration (mongodb or firebase) must be provided');
     }
 
-    // Set up logger
-    this.logger = options.logger || this.createDefaultLogger();
+    // Set up logger based on enableLogging option
+    this.logger = this.createLogger(options.logger, options.enableLogging);
 
     // Initialize MongoDB if configuration provided
     if (options.mongodb) {
@@ -43,14 +43,37 @@ class DB {
   }
 
   /**
-   * Creates a default logger if none provided
+   * Creates a logger based on provided options
+   * @param customLogger - Custom logger provided by user
+   * @param enableLogging - Whether logging is enabled (defaults to true if custom logger provided, false otherwise)
    */
-  private createDefaultLogger(): Logger {
+  private createLogger(customLogger?: Logger, enableLogging?: boolean): Logger {
+    // If custom logger is provided, use it (respect enableLogging flag)
+    if (customLogger) {
+      if (enableLogging === false) {
+        return this.createSilentLogger();
+      }
+      return customLogger;
+    }
+
+    // If no custom logger and logging is explicitly enabled, throw error
+    if (enableLogging === true) {
+      throw new Error('enableLogging is set to true but no logger was provided. Please provide a logger in the options.');
+    }
+
+    // Default behavior: no logger provided, logging disabled
+    return this.createSilentLogger();
+  }
+
+  /**
+   * Creates a silent logger that does nothing
+   */
+  private createSilentLogger(): Logger {
     return {
-      info: (message: string, ...args: any[]) => console.log(`[INFO] ${message}`, ...args),
-      error: (message: string, ...args: any[]) => console.error(`[ERROR] ${message}`, ...args),
-      warn: (message: string, ...args: any[]) => console.warn(`[WARN] ${message}`, ...args),
-      debug: (message: string, ...args: any[]) => console.debug(`[DEBUG] ${message}`, ...args),
+      info: () => {},
+      error: () => {},
+      warn: () => {},
+      debug: () => {},
     };
   }
 

@@ -1,6 +1,6 @@
 {
   "name": "@sky7/db",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A unified database library for MongoDB and Firebase with TypeScript support",
   "homepage": "https://github.com/ecdevz/db#readme",
   "bugs": {
